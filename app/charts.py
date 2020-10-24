@@ -73,11 +73,8 @@ def display_mds_second():
     correlated_data = df2.corr(method='pearson').abs()
     similarities = 1 - correlated_data
     embedding = MDS(n_components=2, metric=True,  dissimilarity = "precomputed")
+    # df2 = StandardScaler().fit_transform(df2) 
     df_transformed = embedding.fit_transform(similarities)
-    print(df_transformed)
-    # mds_data = MDS(n_components=2, dissimilarity='precomputed')
-    # similarity = pairwise_distances(df2, metric='correlation')
-    # originalMDSCo = mds_data.fit_transform(similarity)
     figure= px.scatter(df_transformed,x = 0, y = 1 , height= 500, color=1 ,color_continuous_scale= "RdBu", color_continuous_midpoint=1)
     figure.update_layout(legend_title="Legend Title", title ="MDS PLOT 1 -|correlation|")
     return figure
@@ -85,8 +82,8 @@ def display_mds_euclidian():
     figure = None
     df2 = df[["age","pop", "pov", "college", "urate", "county_income",  "h_income", "share_white", "share_black", "share_hispanic"]]
     embedding = MDS(n_components=2, metric=True,  dissimilarity = "euclidean")
+    df2 = StandardScaler().fit_transform(df2)
     df_transformed = embedding.fit_transform(df2)
-    # print(df_transformed)
     figure= px.scatter(df_transformed, height=500, color= 1, x =0, y =1)
     figure.update_layout(legend_title="Legend Title", title ="MDS PLOT EUCLEDIAN")
     return figure
